@@ -14,6 +14,7 @@ const search = document.getElementById("search")
 const nameField = document.getElementById("name")
 const content = document.getElementById("content")
 
+const startswith = document.getElementById("startswith")
 const contains = document.getElementById("contains")
 const regex = document.getElementById("regex")
 
