@@ -18,6 +18,10 @@ const startswith = document.getElementById("startswith")
 const contains = document.getElementById("contains")
 const regex = document.getElementById("regex")
 
+startswith.checked = true
+contains.checked = false
+regex.checked = false
+
 function showIndexData() {
     if (index === null) {
         indexinfo.innerHTML = "No downloaded index found"
