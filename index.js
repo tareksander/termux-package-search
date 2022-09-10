@@ -4,6 +4,7 @@ let tdec = new TextDecoder()
 const INDEX_KEY = "index"
 
 let index = null
+let doSearch = false
 
 
 
@@ -38,6 +39,10 @@ updateindex.onclick = (ev) => {
             window.localStorage.setItem(INDEX_KEY, JSON.stringify(indexCompressed))
         } catch (err) {console.log(err)}
         showIndexData()
+        if (doSearch) {
+            search.click()
+            doSearch = false
+        }
     }).catch((reason) => {
         indexinfo.innerHTML = "Error downloading index"
     })
@@ -50,6 +55,10 @@ nameField.onkeydown = (ev) => {
 }
 
 search.onclick = (ev) => {
+    if (index === null) {
+        doSearch = true
+        updateindex.click()
+    }
     content.innerHTML = ""
     index.data.filter((pkg) => {
         if (contains.checked) return pkg.name.includes(nameField.value)
@@ -85,6 +94,6 @@ search.onclick = (ev) => {
 try {
     let indexCompressed = JSON.parse(window.localStorage.getItem(INDEX_KEY))
     index = JSON.parse(tdec.decode(pako.inflate(indexCompressed)))
-} catch (err) {console.log(err)}
+} catch (_) {}
 showIndexData()
 
