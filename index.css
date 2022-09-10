@@ -1,0 +1,49 @@
+
+
+html, body {
+    margin: 0px;
+}
+
+#ui {
+    padding: 1rem;
+    width: 100%;
+    border-bottom: 3px solid black;
+    box-sizing: border-box;
+}
+
+#updateindex {
+    display: inline;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+
+#indexinfo {
+    display: inline;
+}
+
+fieldset {
+    border: 0px;
+}
+
+#contentTable {
+    margin: 0.5rem;
+    width: calc(100% - 1rem);
+    box-sizing: border-box;
+    border-collapse: collapse;
+}
+
+
+table, th, td {
+    border: 1px solid black;
+}
+
+td {
+    padding: 0.5rem;
+}
+
+th {
+    border-bottom: 2px solid black;
+    margin-bottom: 0.5rem;
+}
+
+

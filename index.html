@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://unpkg.com/pako@2.0.4/dist/pako.min.js"></script>
+        <script src="index.js" defer></script>
+        <link rel="stylesheet" href="index.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <noscript><h1>This page needs Javascript to work.</h1></noscript>
+        <div id="ui">
+            <button id="updateindex">Update index</button>
+            <p id="indexinfo"></p>
+            <br>
+            <label for="name">Package name: </label>
+            <input type="text" minlength="1" maxlength="30" id="name" name="name">
+            <button id="search">Search</button><br>
+            <p>Search mode:</p>
+            <input type="radio" id="startswith" name="mode"><label for="startswith" checked>starts with</label>
+            <input type="radio" id="contains" name="mode"><label for="contains">contains</label>
+            <input type="radio" id="regex" name="mode"><label for="regex">JS regex</label>
+        </div>
+        <table id="contentTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Version</th>
+                    <th>Homepage</th>
+                    <th>Maintainer</th>
+                    <th>Dependencies</th>
+                </tr>
+            </thead>
+            <tbody id="content">
+                
+            </tbody>
+        </table>
+    </body>
+</html>
