@@ -18,9 +18,19 @@ const startswith = document.getElementById("startswith")
 const contains = document.getElementById("contains")
 const regex = document.getElementById("regex")
 
+const searchname = document.getElementById("searchName")
+const searchdescription = document.getElementById("searchDescription")
+const searchdependencies = document.getElementById("searchDependencies")
+
+
 startswith.checked = true
 contains.checked = false
 regex.checked = false
+
+searchname.checked = true
+contains.checked = false
+regex.checked = false
+
 
 function showIndexData() {
     if (index === null) {
@@ -66,9 +76,24 @@ search.onclick = (ev) => {
     }
     content.innerHTML = ""
     index.data.filter((pkg) => {
-        if (contains.checked) return pkg.name.includes(nameField.value)
-        if (regex.checked) return new RegExp(nameField.value).test(pkg.name)
-        return pkg.name.startsWith(nameField.value)
+        let searchString = null
+        
+        if (searchname.checked) searchString = pkg.name;
+        if (searchdescription.checked) searchString = pkg.description;
+        
+        if (searchString != null) {
+            if (contains.checked) return searchString.includes(nameField.value)
+            if (regex.checked) return new RegExp(nameField.value).test(searchString)
+            return searchString.startsWith(nameField.value)
+        } else {
+            for (let dep of pkg.depends) {
+                if (contains.checked && dep.includes(nameField.value)) return true
+                if (regex.checked && new RegExp(nameField.value).test(dep)) return true
+                if (dep.startsWith(nameField.value)) return true
+            }
+        }
+        
+        return false
     }).forEach(e => {
         let tr = document.createElement("tr")
         let td = document.createElement("td")
