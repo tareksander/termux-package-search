@@ -1,11 +1,11 @@
 
-const sw_version = 1;
+const sw_version = 2;
 
 
 
+const base = new URL(self.registration.scope).pathname
 
-
-
+console.log("sw", base)
 
 
 
@@ -19,9 +19,9 @@ const getCache = async () => {
 const initCache = async () => {
     let cache = await getCache();
     await cache.addAll([
-        "/index.html",
-        "/index.js",
-        "/index.css",
+        base+"index.html",
+        base+"index.js",
+        base+"index.css",
         "https://unpkg.com/pako@2.0.4/dist/pako.min.js",
         "https://unpkg.com/localforage@1.10.0/dist/localforage.min.js",
     ]);
@@ -36,8 +36,8 @@ const clearOldCaches = async () => {
 
 const fetchResponse = async (r) => {
     let url = new URL(r.url);
-    if (url.pathname === "/") {
-        url.pathname = "/index.html";
+    if (url.pathname === base) {
+        url.pathname += "index.html";
     }
     const cacheResponse = await self.caches.match(url.toString());
     if (cacheResponse) {
