@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="https://unpkg.com/pako@2.0.4/dist/pako.min.js"></script>
+        <script src="https://unpkg.com/pako@2.0.4/dist/pako.min.js" defer></script>
+        <script src="https://unpkg.com/localforage@1.10.0/dist/localforage.min.js" defer></script>
         <script src="index.js" defer></script>
         <link rel="stylesheet" href="index.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Termux package search</title>
+        <meta name="description" content="Search Termux packages from a browser without a Termux installation."></meta>
     </head>
     <body>
         <noscript><h1>This page needs Javascript to work.</h1></noscript>
         <div id="ui">
+            <div class="right">
+                <p>
+                    Available offline: <span id="offline" style="color: red;"></span>
+                </p>
+                <p>
+                    Persistent storage: <span id="persistent" style="color: red;"></span>
+                </p>
+                <p><button id="persistbutton">Enable persistent storage<br>(may not work for chromium-browsers)</button></p>
+                <p><button id="updatesbutton">Check for updates</button></p>
+            </div>
             <button id="updateindex">Update index</button>
             <p id="indexinfo"></p>
             <br>

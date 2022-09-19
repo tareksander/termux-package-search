@@ -21,8 +21,8 @@ html, body {
     display: inline;
 }
 
-fieldset {
-    border: 0px;
+.right {
+    float: right;
 }
 
 #contentTable {

@@ -1,7 +1,8 @@
 let tenc = new TextEncoder()
 let tdec = new TextDecoder()
 
-const INDEX_KEY = "index"
+const INDEX_KEY_OLD = "index"
+const INDEX_KEY = "indexNew"
 
 let index = null
 let doSearch = false
@@ -21,6 +22,14 @@ const regex = document.getElementById("regex")
 const searchname = document.getElementById("searchName")
 const searchdescription = document.getElementById("searchDescription")
 const searchdependencies = document.getElementById("searchDependencies")
+
+
+const offline = document.getElementById("offline")
+const persistent = document.getElementById("persistent")
+const persistbutton = document.getElementById("persistbutton")
+const updatesbutton = document.getElementById("updatesbutton")
+
+
 
 
 startswith.checked = true
@@ -51,8 +60,8 @@ updateindex.onclick = (ev) => {
         }
         try {
             let indexCompressed = pako.deflate(tenc.encode(JSON.stringify(index)))
-            window.localStorage.setItem(INDEX_KEY, JSON.stringify(indexCompressed))
-        } catch (err) {console.log(err)}
+            localforage.setItem(INDEX_KEY, indexCompressed)
+        } catch (err) {}
         showIndexData()
         if (doSearch) {
             search.click()
@@ -122,8 +131,66 @@ search.onclick = (ev) => {
 }
 
 try {
-    let indexCompressed = JSON.parse(window.localStorage.getItem(INDEX_KEY))
-    index = JSON.parse(tdec.decode(pako.inflate(indexCompressed)))
+    window.localStorage.removeItem(INDEX_KEY_OLD)
 } catch (_) {}
-showIndexData()
+
+
+localforage.getItem(INDEX_KEY).then((indexCompressed) => {
+    index = JSON.parse(tdec.decode(pako.inflate(indexCompressed)))
+    showIndexData()
+}).catch(() => {
+    showIndexData()
+}).
+
+
+sw = null
+
+if ("serviceWorker" in navigator) {
+    updatesbutton.onclick = (ev) => {
+        if (sw != null) {
+            sw.update()
+        }
+    }
+    navigator.serviceWorker.register("/sw.js", {scope: "/"}).then((w) => {
+        sw = w
+        sw.onupdatefound = () => {
+            window.alert("Update found! Please refresh the page to apply the update.")
+        }
+        offline.innerText = "Yes"
+        offline.style = "color: green;"
+    }).catch( ()=> {
+        offline.innerText = "No"
+    })
+} else {
+    offline.innerText = "No"
+    updatesbutton.remove()
+}
+
+
+function displayPersist(pers) {
+    if (pers) {
+        persistbutton.remove()
+        persistent.innerText = "Yes"
+        persistent.style = "color: green;"
+    } else {
+        persistent.innerText = "No"
+    }
+}
+
+persistbutton.onclick = (ev) => {
+    navigator.storage.persist().then((pers) => {
+        displayPersist(pers)
+    })
+}
+
+if (navigator.storage) {
+    navigator.storage.persisted().then((pers) => {
+        displayPersist(pers)
+    })
+} else {
+    persistbutton.remove()
+    persistent.innerText = "No"
+}
+
+
 
