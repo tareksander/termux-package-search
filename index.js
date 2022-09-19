@@ -153,7 +153,6 @@ if ("serviceWorker" in navigator) {
     }
     let path = document.location.pathname
     path = path.substring(0, path.lastIndexOf("/")+1)
-    console.log("scope", path)
     navigator.serviceWorker.register(path+"sw.js", {scope: path}).then((w) => {
         sw = w
         sw.onupdatefound = () => {

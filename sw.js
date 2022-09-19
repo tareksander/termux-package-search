@@ -1,11 +1,10 @@
 
-const sw_version = 2;
+const sw_version = 3;
 
 
 
 const base = new URL(self.registration.scope).pathname
 
-console.log("sw", base)
 
 
 
