@@ -27,7 +27,8 @@
             <br>
             <label for="name">Package name: </label>
             <input type="text" minlength="1" maxlength="30" id="name" name="name">
-            <button id="search">Search</button><br>
+            <button id="search">Search</button>
+            <div style="margin-top: 1em;">Matches: <div style="display: inline;" id="matches">0</div></div>
             <p>Search mode:</p>
             <input type="radio" id="startswith" name="mode"><label for="startswith" checked>starts with</label>
             <input type="radio" id="contains" name="mode"><label for="contains">contains</label>

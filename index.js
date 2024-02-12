@@ -14,6 +14,7 @@ const indexinfo = document.getElementById("indexinfo")
 const search = document.getElementById("search")
 const nameField = document.getElementById("name")
 const content = document.getElementById("content")
+const matches = document.getElementById("matches")
 
 const startswith = document.getElementById("startswith")
 const contains = document.getElementById("contains")
@@ -84,7 +85,7 @@ search.onclick = (ev) => {
         updateindex.click()
     }
     content.innerHTML = ""
-    index.data.filter((pkg) => {
+    let results = index.data.filter((pkg) => {
         let searchString = null
         
         if (searchname.checked) searchString = pkg.name;
@@ -103,7 +104,9 @@ search.onclick = (ev) => {
         }
         
         return false
-    }).forEach(e => {
+    });
+    matches.textContent = results.length;
+    results.forEach(e => {
         let tr = document.createElement("tr")
         let td = document.createElement("td")
         td.textContent = e.name
